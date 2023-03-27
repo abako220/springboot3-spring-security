@@ -1,4 +1,4 @@
-package com.troy.security.entity;
+package com.troy.security.user;
 
 public enum Role {
 
