@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "432A462D4A614E645267556A586E3272357538782F413F4428472B4B62506553";
-    // todo move to application.properties file
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
