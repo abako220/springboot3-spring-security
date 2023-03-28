@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +35,12 @@ public class User implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+
+        List<GrantedAuthority> grantedAuthorities= new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+getRole().name().toUpperCase()));
+        System.out.println("inside Users class "+grantedAuthorities.get(0).getAuthority());
+        return grantedAuthorities;
+        //return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     /**

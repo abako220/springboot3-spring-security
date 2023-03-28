@@ -1,5 +1,6 @@
 package com.troy.security.auth;
 
+import com.troy.security.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
