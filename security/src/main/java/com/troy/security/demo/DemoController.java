@@ -28,7 +28,10 @@ public class DemoController {
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAnyRole('ROLE_USER')")
+    @PreAuthorize(
+            "hasRole('ROLE_ADMIN') " +
+            "or " +
+                    "hasAnyRole('ROLE_USER')")
     @GetMapping("/hello2")
     public ResponseEntity<String> sayHello2() {
         return ResponseEntity.ok("Hello from secured endpoint");
