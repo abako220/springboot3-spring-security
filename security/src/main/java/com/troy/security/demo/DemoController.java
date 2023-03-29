@@ -21,4 +21,16 @@ public class DemoController {
         response.setContentType("text/json");
         return ResponseEntity.ok("Hello from secured endpoint");
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/hello1")
+    public ResponseEntity<String> sayHello1() {
+        return ResponseEntity.ok("Hello from secured endpoint");
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasAnyRole('ROLE_USER')")
+    @GetMapping("/hello2")
+    public ResponseEntity<String> sayHello2() {
+        return ResponseEntity.ok("Hello from secured endpoint");
+    }
 }
