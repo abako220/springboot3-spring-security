@@ -21,9 +21,9 @@ import static com.troy.security.token.TokenType.*;
 public class Token {
 
     @Id
-    public Integer id;
+    public String id;
 
-    @Indexed(unique = true)
+   // @Indexed(unique = true)
     public String token;
 
     public TokenType tokenType = BEARER;
@@ -32,8 +32,10 @@ public class Token {
 
     public boolean expired;
 
-    @DocumentReference(lazy = true, lookup = "{ 'token' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    public User user;
+   // @DocumentReference(lazy = true, lookup = "{ 'token' : ?#{#self._id} }")
+   // @ReadOnlyProperty
+    //public User user;
+
+    public String userId;
 
 }

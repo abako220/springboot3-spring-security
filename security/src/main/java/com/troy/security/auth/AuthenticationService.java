@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -56,7 +59,7 @@ public class AuthenticationService {
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        revokeAllUserTokens(user);
+        revokeAllUserTokens(user.getId());
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -68,7 +71,8 @@ public class AuthenticationService {
 
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
-                .user(user)
+                //.user(user)
+                .userId(user.getId())
                 .token(jwtToken)
                 .tokenType(TokenType.BEARER)
                 .expired(false)
@@ -78,9 +82,9 @@ public class AuthenticationService {
 
     }
 
-    private void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-        if (validUserTokens.isEmpty())
+    private void revokeAllUserTokens(String userId) {
+        var validUserTokens = tokenRepository.findAllByUserIdAndExpiredIsFalseOrRevokedIsFalse(userId);
+        if (validUserTokens.isEmpty() || Objects.isNull(validUserTokens))
             return;
         validUserTokens.forEach(token -> {
             token.setExpired(true);

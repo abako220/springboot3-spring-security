@@ -32,7 +32,7 @@ public class User implements UserDetails {
     private String password;
     private Role role;
 
-    @DocumentReference(lazy = true)
+    //@DocumentReference(lazy = true)
     public Token token;
 
     /**
